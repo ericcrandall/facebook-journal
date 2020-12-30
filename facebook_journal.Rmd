@@ -1,0 +1,52 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+My goal here is to write code to convert my Facebook post history into Day One Journal format. I may try to turn this into a Shiny app as well, as a learning experience.
+
+```{r}
+library(jsonlite)
+library(lubridate)
+library(anytime)
+
+
+```
+
+So each your_posts.json has 5 components:
+
+* timestamp - timestamp
+* attachments - associated links or photos
+* data - the post itself
+* title - "Eric Posted in Washington Place" or "Eric updated his status"
+* tags - People that you tagged
+
+
+Facebook outputs text incorrectly coded as UTF-8 as described [here](https://stackoverflow.com/questions/50008296/facebook-json-badly-encoded). For example apostrophes coded as "Ericâ\u0080\u0099s" I used iconv below to fix it.
+
+```{r}
+
+FBposts <- fromJSON("/Users/eric/Documents/Eric_Personal_Projects/facebook-ericcrandall0_json/posts/your_posts_1.json")
+
+title <- FBposts$title
+timestamp <- anytime(FBposts$timestamp)
+tags <- FBposts$tags
+attachments <- FBposts$attachments
+data <- FBposts$data
+
+for(p in length(data)){
+  
+}
+
+FBconvert <- function(index, title, timestamp, tags, attachments, data){
+  
+  text<- message(paste(title[index],iconv(data[[index]]$post[1], "UTF-8", to = "latin2"), sep = "\n"))
+  entry <- c(timestamp[index], print(title[index],"\n")
+  
+}
+  
+
+
+
+
+```
